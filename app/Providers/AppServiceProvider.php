@@ -19,6 +19,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        foreach (config('interfaces') as $interface => $concrete) {
+            app()->bind($interface, fn() => app($concrete));
+        }
     }
 }

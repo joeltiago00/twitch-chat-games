@@ -26,8 +26,13 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "TwitchIRC\\": "TwitchIRC/"
-        }
+            "Game\\": "Game/",
+            "Repositories\\": "Repositories/"
+        },
+        "files": [
+            "utils/string.php",
+            "utils/arrayToString.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

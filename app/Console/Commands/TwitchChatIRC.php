@@ -2,9 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Duel;
+use App\Models\DuelAnswer;
+use Game\MusicDuel\MusicDuel;
+use Game\TwitchIRC\TwitchIRCService;
 use Illuminate\Console\Command;
-use TwitchIRC\TwitchChatClient;
-use TwitchIRC\TwitchIRCService;
 
 class TwitchChatIRC extends Command
 {
@@ -25,19 +27,48 @@ class TwitchChatIRC extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(MusicDuel $musicDuel)
     {
-        $client = new TwitchIRCService('acostaleandro', 'oauth:cmkeivazk7eqcl6iy8o6d0uhzkx1ms');
+        //acostaleandro loud_coringa
+        $musicDuel->play(Duel::factory()->make(['chat' => 'alvez2g', 'id' => 1]), DuelAnswer::factory()->make(['id' => 1, 'answer_number' => 1]));
+//        $this->extracted();
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function extracted()
+    {
+        $client = new TwitchIRCService('loud_coringa', 'oauth:cmkeivazk7eqcl6iy8o6d0uhzkx1ms');
 
         $client->connect();
-
+        $i = 0;
         while (true) {
-            $content =$client->read(512);
+            $content = $client->read(512);
 
             $this->line($content);
 
-            sleep(3);
-        }
+            if ($i > 1) {
+                $linesSeparated = explode(PHP_EOL, $content);
 
+                foreach ($linesSeparated as $line) {
+                    $lineSeparated = explode(':', $line);
+
+                    $count = count($lineSeparated);
+
+                    $answer = $lineSeparated[$count - 1];
+
+                    $nick = explode('!', $lineSeparated[1])[0];
+
+                    dd($answer, $nick);
+                }
+
+            }
+
+//            sleep(3);
+
+            $i++;
+        }
     }
 }

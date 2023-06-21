@@ -1,6 +1,6 @@
 <?php
 
-namespace TwitchIRC\Contracts;
+namespace Game\TwitchIRC\Contracts;
 
 interface TwitchIRCServiceInterface
 {

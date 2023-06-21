@@ -1,15 +1,15 @@
 <?php
 
-namespace TwitchIRC;
+namespace Game\TwitchIRC;
 
+use Game\TwitchIRC\Contracts\TwitchSocketInterface;
 use Socket;
-use TwitchIRC\Contracts\TwitchSocketInterface;
 
 class TwitchSocket implements TwitchSocketInterface
 {
     private ?Socket $socket;
-    static $host = "irc.chat.twitch.tv";
-    static $port = "6667";
+    static string $host = "irc.chat.twitch.tv";
+    static string $port = "6667";
 
     public function __construct()
     {

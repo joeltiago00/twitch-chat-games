@@ -1,8 +1,8 @@
 <?php
 
-namespace TwitchIRC;
+namespace Game\TwitchIRC;
 
-use TwitchIRC\Contracts\TwitchSocketInterface;
+use Game\TwitchIRC\Contracts\TwitchSocketInterface;
 
 class TwitchIRCService extends TwitchIRC
 {
@@ -28,5 +28,10 @@ class TwitchIRCService extends TwitchIRC
     public function send(string $message): bool|int|null
     {
         return $this->twitchSocket->send($message);
+    }
+
+    public function close(): void
+    {
+        $this->twitchSocket->close();
     }
 }
