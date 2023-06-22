@@ -10,4 +10,6 @@ interface DuelAnswerRepository
     public function store(DuelAnswerDTO $dto): DuelAnswer;
 
     public function existsByDuelIAndAnswerId(int $duelId, int $answerId): bool;
+
+    public function getCountOfFinishedRoundByDuelId(int $duelId): int;
 }

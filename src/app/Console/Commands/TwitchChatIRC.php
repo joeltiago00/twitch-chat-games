@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Duel;
 use App\Models\DuelAnswer;
-use Game\MusicDuel\MusicDuel;
+use Game\DuelProcessor\DuelProcessor;
 use Game\TwitchIRC\TwitchIRCService;
 use Illuminate\Console\Command;
 
@@ -27,10 +27,10 @@ class TwitchChatIRC extends Command
     /**
      * Execute the console command.
      */
-    public function handle(MusicDuel $musicDuel)
+    public function handle(DuelProcessor $duelProcessor)
     {
         //acostaleandro loud_coringa
-        $musicDuel->play(Duel::factory()->make(['chat' => 'alvez2g', 'id' => 1]), DuelAnswer::factory()->make(['id' => 1, 'answer_number' => 1]));
+        $duelProcessor->play(Duel::factory()->make(['chat' => 'alvez2g', 'id' => 1]), DuelAnswer::factory()->make(['id' => 1, 'answer_number' => 1]));
 //        $this->extracted();
 
     }

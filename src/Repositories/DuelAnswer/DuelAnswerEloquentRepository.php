@@ -27,4 +27,13 @@ class DuelAnswerEloquentRepository implements DuelAnswerRepository
             ->where('answer_id', $answerId)
             ->exists();
     }
+
+    public function getCountOfFinishedRoundByDuelId(int $duelId): int
+    {
+        return $this->model
+            ->newQuery()
+            ->where('duel_id', $duelId)
+            ->whereNull('finished_at')
+            ->count();
+    }
 }

@@ -1,13 +1,13 @@
 <?php
 
-namespace Game\MusicDuel;
+namespace Game\DuelProcessor;
 
 use App\Models\Duel;
 use App\Models\DuelAnswer;
 use Game\TwitchIRC\TwitchIRCService;
 use Illuminate\Support\Facades\Storage;
 
-class MusicDuel
+class DuelProcessor
 {
     private array $nicks = [];
     private int $winPoints = 300;
@@ -16,9 +16,9 @@ class MusicDuel
     {
         $client = $this->getIRCService($duel->chat);
 
-        $exp = now()->addSeconds(15);
+        $exp = now()->addSeconds(10);
 
-        $answerNumber = $duelAnswer->answer_number;
+        $rightAnswer = $duelAnswer->answer_number;
 
         $content = [];
 
@@ -32,12 +32,12 @@ class MusicDuel
             $content[] = $client->read(512);
         }
 
-        $answers = $this->processContent($content, $answerNumber);
+        $answers = $this->processContent($content, $rightAnswer);
 
         // TODO:: analise how to store this info (db or file)
         Storage::put(
             sprintf('%s_duel_%s_duel_answer_%s.json', now()->format('Y-m-d'), $duel->getKey(), $duelAnswer->getKey()),
-            json_encode($answers)
+            json_encode(array_filter($answers))
         );
     }
 
@@ -55,20 +55,20 @@ class MusicDuel
         return explode('!', $lineSeparated[1] ?? '')[0];
     }
 
-    private function processContent(array $contents, int $answerNumber): array
+    private function processContent(array $contents, int $rightAnswer): array
     {
         $answers = [];
 
         foreach ($contents as $content) {
             $linesSeparated = $this->separateByLines($content);
 
-            $answers = array_merge($this->processAnswers($linesSeparated, $answerNumber), $answers);
+            $answers[] = array_merge($this->processAnswers($linesSeparated, $rightAnswer), $answers);
         }
 
         return $answers;
     }
 
-    private function processAnswers(array $lines, int $answerNumber): array
+    private function processAnswers(array $lines, int $rightAnswer): array
     {
         $answers = [];
 
@@ -77,29 +77,46 @@ class MusicDuel
 
             $count = count($lineSeparated);
 
-            $answer = $lineSeparated[$count - 1];
+            $playerAnswer = $lineSeparated[$count - 1];
 
-            $nick = $this->getNick($lineSeparated);
+            $playerNick = $this->getNick($lineSeparated);
 
-            if ($this->isValidAnswer($answer)) {
-                $answer = (int)str_replace('!', '', $answer);
-
-                if ($this->isValidGuess($nick, $answer)) {
-                    $answers[] = [
-                        'nick' => $nick,
-                        'answer' => $answer,
-                        'win_points' => $answer === $answerNumber ? $this->winPoints : 0,
-                        'created_at' => now()->format('Y-m-d H:i:s.u')
-                        ];
-                }
-
-                $this->nicks[] = $nick;
-            }
+            $answers[] = $this->prepareAnswer($playerAnswer, $rightAnswer, $playerNick);
 
             $this->winPoints--;
         }
 
         return $answers;
+    }
+
+    private function prepareAnswer(string $playerAnswer, int $rightAnswer, string $playerNick): array
+    {
+        if ($this->isValidAnswer($playerAnswer)) {
+            $playerAnswer = (int)str_replace('!', '', $playerAnswer);
+
+            $isRightAnswer = $playerAnswer === $rightAnswer;
+
+            $answer = $this->checkAnswer($playerNick, $playerAnswer, $isRightAnswer);
+
+            $this->nicks[] = $playerNick;
+        }
+
+        return $answer ?? [];
+    }
+
+    private function checkAnswer(string $playerNick, int $playerAnswer, bool $isRightAnswer): array
+    {
+        if ($this->isValidGuess($playerNick, $playerAnswer)) {
+            $answer = [
+                'nick' => $playerNick,
+                'answer' => $playerAnswer,
+                'is_right_answer' => $isRightAnswer,
+                'win_points' => $isRightAnswer ? $this->winPoints : 0,
+                'created_at' => now()->format('Y-m-d H:i:s.u')
+            ];
+        }
+
+        return $answer ?? [];
     }
 
     private function separateByLines(string $content): array

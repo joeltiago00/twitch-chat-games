@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\Duel\CreateDuelController;
 use App\Http\Controllers\Duel\CreateNewDuelRoundController;
+use App\Models\Duel;
+use App\Models\DuelAnswer;
+use Game\DuelProcessor\DuelProcessor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,3 +30,8 @@ Route::group(['prefix' => 'duel'], function () {
         Route::get('new-round', CreateNewDuelRoundController::class);
     });
 });
+
+Route::get('test', fn() => (new DuelProcessor)->play(
+    Duel::factory()->make(['chat' => 'alvez2g', 'id' => 1]),
+    DuelAnswer::factory()->make(['id' => 1, 'answer_number' => 1])
+));
