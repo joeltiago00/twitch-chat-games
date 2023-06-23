@@ -1,8 +1,8 @@
 <?php
 
-namespace Game\TwitchIRC;
+namespace Game\Twitch\IRC;
 
-use Game\TwitchIRC\Contracts\TwitchSocketInterface;
+use Game\Twitch\IRC\Contracts\TwitchSocketInterface;
 
 class TwitchIRCService extends TwitchIRC
 {

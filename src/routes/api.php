@@ -1,10 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginWithTwitchController;
 use App\Http\Controllers\Duel\CreateDuelController;
 use App\Http\Controllers\Duel\CreateNewDuelRoundController;
-use App\Models\Duel;
-use App\Models\Round;
-use Game\DuelProcessor\DuelProcessor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,7 +29,6 @@ Route::group(['prefix' => 'duel'], function () {
     });
 });
 
-Route::get('test', fn() => (new DuelProcessor)->play(
-    Duel::factory()->make(['chat' => 'alvez2g', 'id' => 1]),
-    Round::factory()->make(['id' => 1, 'answer_number' => 1])
-));
+Route::get('logged', fn() => response()->json(['message' => 'logged with twitch!']));
+
+Route::get('twitch-auth', LoginWithTwitchController::class);

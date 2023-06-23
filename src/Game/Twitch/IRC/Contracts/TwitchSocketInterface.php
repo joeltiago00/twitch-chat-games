@@ -1,6 +1,6 @@
 <?php
 
-namespace Game\TwitchIRC\Contracts;
+namespace Game\Twitch\IRC\Contracts;
 
 interface TwitchSocketInterface
 {

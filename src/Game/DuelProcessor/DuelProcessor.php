@@ -4,7 +4,7 @@ namespace Game\DuelProcessor;
 
 use App\Models\Duel;
 use App\Models\Round;
-use Game\TwitchIRC\TwitchIRCService;
+use Game\Twitch\IRC\TwitchIRCService;
 use Illuminate\Support\Facades\Storage;
 
 class DuelProcessor
@@ -14,7 +14,7 @@ class DuelProcessor
 
     public function play(Duel $duel, Round $duelAnswer): void
     {
-        $client = $this->getIRCService($duel->chat);
+        $twitchChat = $this->getIRCService($duel->chat);
 
         $exp = now()->addSeconds(10);
 
@@ -24,12 +24,12 @@ class DuelProcessor
 
         while (true) {
             if ($exp->lessThanOrEqualTo(now())) {
-                $client->close();;
+                $twitchChat->close();;
 
                 break;
             }
 
-            $content[] = $client->read(512);
+            $content[] = $twitchChat->read(512);
         }
 
         $answers = $this->processContent($content, $rightAnswer);
@@ -91,7 +91,7 @@ class DuelProcessor
 
     private function prepareAnswer(string $playerAnswer, int $rightAnswer, string $playerNick): array
     {
-        if ($this->isValidAnswer($playerAnswer)) {
+        if ($this->alreadyAnsweredByNick($playerNick) && $this->isValidAnswer($playerAnswer)) {
             $playerAnswer = (int)str_replace('!', '', $playerAnswer);
 
             $isRightAnswer = $playerAnswer === $rightAnswer;

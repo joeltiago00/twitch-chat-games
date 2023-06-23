@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Duel;
 use App\Models\Round;
 use Game\DuelProcessor\DuelProcessor;
-use Game\TwitchIRC\TwitchIRCService;
+use Game\Twitch\IRC\TwitchIRCService;
 use Illuminate\Console\Command;
 
 class TwitchChatIRC extends Command
