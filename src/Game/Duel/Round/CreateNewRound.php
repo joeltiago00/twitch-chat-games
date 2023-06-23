@@ -2,7 +2,7 @@
 
 namespace Game\Duel\Round;
 
-use App\Models\DuelAnswer;
+use App\Models\Round;
 use Game\Answer\RandomAnswer;
 use Game\Answer\RandomOption;
 use Game\Duel\DTO\DuelAnswerDTO;
@@ -20,7 +20,7 @@ class CreateNewRound
     {
     }
 
-    public function handle(int $duelId): DuelAnswer
+    public function handle(int $duelId): Round
     {
         $duel = $this->duelRepository->findById($duelId);
 

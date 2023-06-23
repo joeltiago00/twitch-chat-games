@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Duel;
-use App\Models\DuelAnswer;
+use App\Models\Round;
 use Game\DuelProcessor\DuelProcessor;
 use Game\TwitchIRC\TwitchIRCService;
 use Illuminate\Console\Command;
@@ -30,7 +30,7 @@ class TwitchChatIRC extends Command
     public function handle(DuelProcessor $duelProcessor)
     {
         //acostaleandro loud_coringa
-        $duelProcessor->play(Duel::factory()->make(['chat' => 'alvez2g', 'id' => 1]), DuelAnswer::factory()->make(['id' => 1, 'answer_number' => 1]));
+        $duelProcessor->play(Duel::factory()->make(['chat' => 'alvez2g', 'id' => 1]), Round::factory()->make(['id' => 1, 'answer_number' => 1]));
 //        $this->extracted();
 
     }

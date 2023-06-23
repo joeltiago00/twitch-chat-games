@@ -4,7 +4,7 @@ namespace Tests\Unit\Duel\Round;
 
 use App\Models\Answer;
 use App\Models\Duel;
-use App\Models\DuelAnswer;
+use App\Models\Round;
 use Game\Answer\RandomAnswer;
 use Game\Duel\Round\CreateNewRound;
 use Mockery;
@@ -32,7 +32,7 @@ class CreateDuelRoundTest extends TestCase
 
         $duelAnswerRepository->shouldReceive('store')
             ->once()
-            ->andReturn(DuelAnswer::factory()->make());
+            ->andReturn(Round::factory()->make());
 
         $action = new CreateNewRound($duelRepositoryMock, $duelAnswerRepository, $randomAnswerMock);
 

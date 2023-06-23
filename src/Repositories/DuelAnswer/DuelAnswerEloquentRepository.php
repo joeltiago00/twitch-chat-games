@@ -2,22 +2,22 @@
 
 namespace Repositories\DuelAnswer;
 
-use App\Models\DuelAnswer;
+use App\Models\Round;
 use Game\Duel\DTO\DuelAnswerDTO;
 
 class DuelAnswerEloquentRepository implements DuelAnswerRepository
 {
-    public function __construct(private readonly DuelAnswer $model)
+    public function __construct(private readonly Round $model)
     {
     }
 
-    public function store(DuelAnswerDTO $dto): DuelAnswer
+    public function store(DuelAnswerDTO $dto): Round
     {
         $round = $this->model
             ->newQuery()
             ->create($dto->toArray());
 
-        /** @var DuelAnswer */
+        /** @var Round */
         return $round->load('duel');
     }
 

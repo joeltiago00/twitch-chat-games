@@ -28,6 +28,6 @@ class Duel extends Model
 
     public function rounds(): HasMany
     {
-        return $this->hasMany(DuelAnswer::class, 'duel_id', 'id');
+        return $this->hasMany(Round::class, 'duel_id', 'id');
     }
 }

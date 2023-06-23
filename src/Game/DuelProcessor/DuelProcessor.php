@@ -3,7 +3,7 @@
 namespace Game\DuelProcessor;
 
 use App\Models\Duel;
-use App\Models\DuelAnswer;
+use App\Models\Round;
 use Game\TwitchIRC\TwitchIRCService;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,7 +12,7 @@ class DuelProcessor
     private array $nicks = [];
     private int $winPoints = 300;
 
-    public function play(Duel $duel, DuelAnswer $duelAnswer): void
+    public function play(Duel $duel, Round $duelAnswer): void
     {
         $client = $this->getIRCService($duel->chat);
 

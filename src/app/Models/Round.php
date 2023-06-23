@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class DuelAnswer extends Model
+class Round extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'duel_answers';
+    protected $table = 'rounds';
 
     protected $fillable = [
         'duel_id',

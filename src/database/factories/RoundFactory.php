@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\DuelAnswer;
+use App\Models\Round;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class DuelAnswerFactory extends Factory
+class RoundFactory extends Factory
 {
-    protected $model = DuelAnswer::class;
+    protected $model = Round::class;
 
     public function definition(): array
     {
