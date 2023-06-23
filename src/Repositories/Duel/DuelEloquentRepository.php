@@ -26,4 +26,13 @@ class DuelEloquentRepository implements DuelRepository
             ->newQuery()
             ->findOrFail($id);
     }
+
+    public function isValidById(int $id): bool
+    {
+        return $this->model
+            ->newQuery()
+            ->where('id', $id)
+            ->whereNull('finished_at')
+            ->exists();
+    }
 }

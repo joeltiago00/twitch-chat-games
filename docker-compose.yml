@@ -5,7 +5,7 @@ services:
     image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: "root"
-      MYSQL_DATABASE: "mendez_garimpo_dev"
+      MYSQL_DATABASE: "twitch_guess_dev"
     ports:
       - "3306:3306"
     volumes:

@@ -14,7 +14,8 @@ class CreateGameRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'chat' => ['required', 'string', 'max:100']
+            'chat' => ['required', 'string', 'max:100'],
+            'type_id' => ['required', 'integer', 'exists:types,id']
         ];
     }
 }

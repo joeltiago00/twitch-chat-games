@@ -9,13 +9,15 @@ class DuelResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
-        $duelType = $this->duelType;
+        $type = $this->type;
 
         return [
             'id' => $this->getKey(),
             'chat' => $this->chat,
-            'duel_type_id' => $duelType->id,
-            'duel_type_name' => $duelType->name,
+            'duration_time' => $this->duration_time,
+            'finished_at' => $this->finished_at,
+            'duel_type_id' => $type->id,
+            'duel_type_name' => $type->name,
         ];
     }
 }

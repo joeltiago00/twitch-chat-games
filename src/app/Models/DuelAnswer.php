@@ -21,11 +21,11 @@ class DuelAnswer extends Model
 
     public function duel(): HasOne
     {
-        return $this->hasOne(Duel::class);
+        return $this->hasOne(Duel::class, 'id', 'duel_id');
     }
 
     public function answer(): HasOne
     {
-        return $this->hasOne(Answer::class);
+        return $this->hasOne(Answer::class, 'id', 'answer_id');
     }
 }

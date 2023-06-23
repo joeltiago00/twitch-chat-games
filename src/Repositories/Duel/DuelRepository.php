@@ -10,4 +10,6 @@ interface DuelRepository
     public function store(DuelDTO $dto): Duel;
 
     public function findById(int $id): Duel;
+
+    public function isValidById(int $id): bool;
 }

@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->string('chat', 100);
             $table->unsignedBigInteger('type_id');
+            $table->integer('duration_time');
             $table->timestamps();
             $table->softDeletes();
         });

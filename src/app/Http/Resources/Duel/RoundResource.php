@@ -5,7 +5,7 @@ namespace App\Http\Resources\Duel;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DuelRoundResource extends JsonResource
+class RoundResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,8 +15,10 @@ class DuelRoundResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'duel' => DuelResource::make($this->duel),
-            'round' => RoundResource::make($this)
+            'id' => $this->getKey(),
+            'answer_id' => $this->answer_id,
+            'options' => $this->options,
+            'created_at' => $this->created_at
         ];
     }
 }

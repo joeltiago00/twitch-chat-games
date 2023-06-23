@@ -13,10 +13,12 @@ class DuelAnswerEloquentRepository implements DuelAnswerRepository
 
     public function store(DuelAnswerDTO $dto): DuelAnswer
     {
-        /** @var DuelAnswer */
-        return $this->model
+        $round = $this->model
             ->newQuery()
             ->create($dto->toArray());
+
+        /** @var DuelAnswer */
+        return $round->load('duel');
     }
 
     public function existsByDuelIAndAnswerId(int $duelId, int $answerId): bool
