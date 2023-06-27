@@ -21,6 +21,13 @@ class Duel extends Model
         'finished_at'
     ];
 
+    protected $casts = [
+        'type_id' => 'integer',
+        'duration_time' => 'integer',
+        'finished_at' => 'datetime',
+
+    ];
+
     public function type(): HasOne
     {
         return $this->hasOne(Type::class, 'id', 'type_id');

@@ -12,4 +12,6 @@ interface DuelAnswerRepository
     public function existsByDuelIAndAnswerId(int $duelId, int $answerId): bool;
 
     public function getCountOfFinishedRoundByDuelId(int $duelId): int;
+
+    public function findById(int $id): Round;
 }

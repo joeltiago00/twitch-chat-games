@@ -24,6 +24,8 @@ class CreateNewRound
     {
         $duel = $this->duelRepository->findById($duelId);
 
+        //TODO:: add verification to know if duel can generate more rounds
+
         $answer = $this->randomAnswer->handle($duelId, $duel->type_id);
 
         $round = $this->duelAnswerRepository

@@ -20,7 +20,9 @@ RUN   apt-get update -y && \
 RUN a2enmod rewrite
 RUN pecl install yaml-2.1.0 zip xdebug && \
     docker-php-ext-install gd pdo pdo_mysql && \
-    docker-php-ext-enable gd yaml zip pdo pdo_mysql xdebug
+    docker-php-ext-enable gd yaml zip pdo pdo_mysql xdebug && \
+    docker-php-ext-install sockets && \
+    docker-php-ext-enable sockets
 
 # INSTALL COMPOSER
 RUN cd /tmp/ && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

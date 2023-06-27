@@ -38,4 +38,12 @@ class DuelAnswerEloquentRepository implements DuelAnswerRepository
             ->whereNull('finished_at')
             ->count();
     }
+
+    public function findById(int $id): Round
+    {
+        /** @var Round */
+        return $this->model
+            ->newQuery()
+            ->findOrFail($id);
+    }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginWithTwitchController;
 use App\Http\Controllers\Duel\CreateDuelController;
 use App\Http\Controllers\Duel\CreateNewDuelRoundController;
+use App\Http\Controllers\Duel\Round\RoundPlayController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,8 @@ Route::group(['prefix' => 'duel'], function () {
 
     Route::group(['prefix' => '{duel}'], function () {
         Route::get('new-round', CreateNewDuelRoundController::class);
+
+        Route::get('round/{round}/play', RoundPlayController::class);
     });
 });
 
